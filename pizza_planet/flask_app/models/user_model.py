@@ -38,3 +38,16 @@ class User:
         return result
 
 
+    @classmethod
+    def get_all_users(cls):
+        query = "SELECT * FROM users;"
+        result = connectToMySQL(cls.my_db).query_db(query)
+        print(result)
+        if result:
+            user_objects = []
+            for record in result:
+                one_user = cls(record)
+                user_objects.append(one_user)
+            return user_objects
+        else:
+            return None
