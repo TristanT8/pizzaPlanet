@@ -55,11 +55,19 @@ class User:
 
     @classmethod
     def one_user(cls, data):
+        query = "SELECT * FROM users WHERE id = %(id)s;"
+        results = connectToMySQL(cls.my_db).query_db(query,data)
+        if results:
+            one_user = cls(results[0])
+            return one_user
+        else:
+            return False
+
+
+    @classmethod
+    def get_email(cls, data):
         query = "SELECT * FROM users WHERE users.email = %(email)s;"
         result = connectToMySQL(cls.my_db).query_db(query, data)
         if not result:
             return False
         return cls(result[0])
-
-
-    
