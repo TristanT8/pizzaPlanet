@@ -19,3 +19,22 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
+
+    @classmethod
+    def create_user(cls, form_data):
+        hash_password = bcrypt.generate_password_hash(form_data['password'])
+        print(hash_password)
+        user_data = {
+            "first_name" : form_data['first_name'],
+            "last_name" : form_data['last_name'],
+            "email" : form_data['email'],
+            "password" : hash_password
+        }
+
+        query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
+        result = connectToMySQL(cls.my_db).query_db(query, user_data)
+        print(form_data)
+        print(user_data)
+        return result
+
+
