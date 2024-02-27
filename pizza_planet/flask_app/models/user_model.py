@@ -51,3 +51,15 @@ class User:
             return user_objects
         else:
             return None
+
+
+    @classmethod
+    def one_user(cls, data):
+        query = "SELECT * FROM users WHERE users.email = %(email)s;"
+        result = connectToMySQL(cls.my_db).query_db(query, data)
+        if not result:
+            return False
+        return cls(result[0])
+
+
+    
