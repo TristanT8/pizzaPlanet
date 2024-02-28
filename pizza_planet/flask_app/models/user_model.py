@@ -9,7 +9,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
 class User:
-    my_db = "Pizza_planet"
+    my_db = "pizza_planet"
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']
