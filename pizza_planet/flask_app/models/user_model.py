@@ -99,3 +99,18 @@ class User:
             flash("Password must be at least 8 characters", 'register')
             is_valid = False
         return is_valid
+
+
+    @staticmethod
+    def validate_login(form_data):
+        is_valid = True
+        data = { "email" : form_data['email']}
+        valid_user = User.get_email(data)
+        if not valid_user:
+            flash('Invalid Credentials', 'login')
+            is_valid = False
+        if valid_user:
+            if not bcrypt.check_password_hash(valid_user.password, form_data['password']):
+                flash("Invalid Credentials", 'login')
+                is_valid = False
+        return is_valid
