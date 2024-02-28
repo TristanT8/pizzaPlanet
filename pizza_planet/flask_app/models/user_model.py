@@ -71,3 +71,31 @@ class User:
         if not result:
             return False
         return cls(result[0])
+
+
+    @staticmethod
+    def validate_register(user_data):
+        is_valid = True
+        data = {"email" : user_data['email']}
+        valid_email = User.get_email(data)
+
+        if len(user_data['first_name'])<2:
+            flash("First Name must be at least 2 characters!", 'register')
+            is_valid = False
+        if len(user_data['last_name'])<2:
+            flash("Last Name must be at least 2 characters!", 'register')
+            is_valid = False
+        if not EMAIL_REGEX.match(user_data['email']):
+            flash("Invalid Email", 'register')
+            is_valid = False
+        if valid_email:
+            flash("Email already in use!", 'register')
+            is_valid = False
+        if 'password' in user_data and 'confirm' in user_data:
+            if user_data['password'] != user_data['confirm']:
+                flash("Passwords don't match","register")
+                is_valid = False
+        if 'password' in user_data and len(user_data['password'])<8:
+            flash("Password must be at least 8 characters", 'register')
+            is_valid = False
+        return is_valid
