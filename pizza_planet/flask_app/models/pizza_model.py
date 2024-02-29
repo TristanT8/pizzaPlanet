@@ -25,5 +25,11 @@ class Pizza:
         return connectToMySQL(cls.my_db).query_db(query, data)
 
 
-    # @classmethod
-    
+    @classmethod
+    def get_pizza(cls, data):
+        query = "SELECT * FROM pizza WHERE pizza.id = %(id)s"
+        result = connectToMySQL(cls.my_db).query_db(query, data)
+        return cls(result[0])
+
+
+    #@classmethod
