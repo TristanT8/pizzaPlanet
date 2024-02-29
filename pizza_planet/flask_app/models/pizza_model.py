@@ -17,3 +17,13 @@ class Pizza:
         self.updated_at = pizza_data['updated_at']
         self.user_id = pizza_data['user_id']
         self.creator = None
+
+
+    @classmethod
+    def create_pizza(cls, data):
+        query = "INSERT INTO pizza (baker, dough, sauce_base, meat, toppings, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(meat)s, %(toppings)s, %(user_id)s);"
+        return connectToMySQL(cls.my_db).query_db(query, data)
+
+
+    # @classmethod
+    
