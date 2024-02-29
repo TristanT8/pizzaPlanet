@@ -54,3 +54,16 @@ class Pizza:
             single_pizza.creator = User(user_data)
             all_pizzas.append(single_pizza)
         return all_pizzas
+
+
+    @classmethod
+    def update_pizza(cls, data):
+        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, meat = %(meat)s, toppings = %(toppings)s;"
+        result = connectToMySQL(cls.my_db).query_db(query, data)
+        return result
+
+
+    @classmethod
+    def delete_piza(cls, data):
+        query = "DELETE FROM pizza WHERE pizza.id = %(id)s;"
+        return connectToMySQL(cls.my_db).query_db(query, data)
