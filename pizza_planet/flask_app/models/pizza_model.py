@@ -32,4 +32,25 @@ class Pizza:
         return cls(result[0])
 
 
-    #@classmethod
+    @classmethod
+    def get_all_pizzas(cls):
+        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = user.id"
+        result = connectToMySQL(cls.my_db).query_db(query)
+        if not result:
+            return []
+        all_pizzas = []
+        for row in result:
+            single_pizza = cls(row)
+            user_data = {
+                "id": row['users.id'],
+                "first_name": row['first_name'],
+                "last_name": row['last_name'],
+                "email": row['email'],
+                "password": row['password'],
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
+            }
+
+            single_pizza.creator = User(user_data)
+            all_pizzas.append(single_pizza)
+        return all_pizzas
