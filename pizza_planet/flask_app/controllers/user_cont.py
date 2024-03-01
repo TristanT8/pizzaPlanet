@@ -27,3 +27,10 @@ def login_user():
     returning_user = User.get_email(email_data)
     session['user_id'] = returning_user.id
     return redirect('/dashboard')
+
+
+@app.route('/user/logout')
+def logout():
+    if 'user_id' in session:
+        session.pop('user_id')
+    return redirect('/')
