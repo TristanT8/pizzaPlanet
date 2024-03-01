@@ -14,5 +14,16 @@ def register_user():
         return redirect('/')
     user_id = User.create_user(request.form)
     session['user_id'] = user_id
-    return redirect('/')
+    return redirect('/dashboard')
 
+
+@app.route('/user/login', methods = ['POST'])
+def login_user():
+    if not User.validate_login(request.form):
+        return redirect('/')
+    email_data = {
+        "email" : request.form['email']
+    }
+    returning_user = User.get_email(email_data)
+    session['user_id'] = returning_user.id
+    return redirect('/dashboard')
