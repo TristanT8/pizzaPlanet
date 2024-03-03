@@ -4,3 +4,6 @@ from flask_app.models.pizza_model import Pizza
 from flask_app.models.user_model import User
 
 
+@app.route('/dashboard')
+def pizza_home():
+    
