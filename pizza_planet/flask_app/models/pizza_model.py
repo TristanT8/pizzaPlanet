@@ -67,3 +67,24 @@ class Pizza:
     def delete_piza(cls, data):
         query = "DELETE FROM pizza WHERE pizza.id = %(id)s;"
         return connectToMySQL(cls.my_db).query_db(query, data)
+
+
+    @staticmethod
+    def validate_pizza(pizza_data):
+        is_valid = True
+        if not pizza_data['baker']:
+            flash("Baker's name cannot be blank.")
+            is_valid = False
+        if not pizza_data['dough']:
+            flash("Dough name cannot be blank.")
+            is_valid = False
+        if not pizza_data['sauce_base']:
+            flash("Sauce base name cannot be blank.")
+            is_valid = False
+        if not pizza_data['meat']:
+            flash("Meat name cannot be blank.")
+            is_valid = False
+        if not pizza_data['toppings']:
+            flash("Toppings cannot be blank.")
+            is_valid = False
+        return is_valid

@@ -17,3 +17,10 @@ def new_pizza():
     if "user_id" not in session:
         return redirect('/')
     return render_template('new_pizza.html')
+
+
+@app.route('/validate/pizza', methods = ['POST'])
+def validate_pizza():
+    if 'user_id' not in session:
+        return redirect('/')
+    if not Pizza.
