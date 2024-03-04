@@ -23,4 +23,18 @@ def new_pizza():
 def validate_pizza():
     if 'user_id' not in session:
         return redirect('/')
-    if not Pizza.
+    if not Pizza.validate_pizza(request.form):
+        return redirect('/new/pizza')
+
+    data = {
+        "user_id" : session['user_id'],
+        "baker" : request.form['baker'],
+        "dough" : request.form['dough'],
+        "sauce_base" : request.form['sauce_base'],
+        "meat" : request.form['meat'],
+        "toppings" : request.form['toppings']
+    }
+
+    Pizza.create_pizza(data)
+    return redirect('/dashboard')
+
