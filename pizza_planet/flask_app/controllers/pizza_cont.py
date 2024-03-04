@@ -38,3 +38,12 @@ def validate_pizza():
     Pizza.create_pizza(data)
     return redirect('/dashboard')
 
+
+@app.route('/single_pizza/<int:id>')
+def ome_pizza(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('view_pizza.html', pizza = Pizza.get_pizza({'id':id}))
+
+
+@app.route
