@@ -46,4 +46,31 @@ def ome_pizza(id):
     return render_template('view_pizza.html', pizza = Pizza.get_pizza({'id':id}))
 
 
-@app.route
+@app.route('/edit/pizza/<int:id>')
+def edit_pizza(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    pizza = Pizza.get_pizza({'id' : id})
+    return render_template('edit_pizza.html', pizza = pizza)
+
+
+@app.route('/post/edit/pizza/<int:id>', methods = ['POST'])
+def post_edit_pizza(id):
+    if 'user_id' not in session:
+        return redirect('/')
+
+    if not Pizza.validate_pizza(request.form):
+        return redirect(f'/edit/pizza{id}')
+    data = {
+        'id' : id,
+        "baker" : request.form['baker'],
+        "dough" : request.form['dough'],
+        "sauce_base" : request.form['sauce_base'],
+        "meat" : request.form['meat'],
+        "toppings" : request.form['toppings']
+    }
+
+    Pizza.update_pizza(data)
+    return redirect('/dashboard')
+
+
