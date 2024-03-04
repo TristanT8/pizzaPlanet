@@ -64,7 +64,7 @@ class Pizza:
 
 
     @classmethod
-    def delete_piza(cls, data):
+    def delete_pizza(cls, data):
         query = "DELETE FROM pizza WHERE pizza.id = %(id)s;"
         return connectToMySQL(cls.my_db).query_db(query, data)
 

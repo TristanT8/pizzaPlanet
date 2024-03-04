@@ -74,3 +74,9 @@ def post_edit_pizza(id):
     return redirect('/dashboard')
 
 
+@app.route('/pizza/delete/<int:id>')
+def delete_pizza(id):
+    if 'user_id' not in session:
+        return redirect('/user/login')
+    Pizza.delete_pizza({'id' : id})
+    return redirect('/dashboard')
