@@ -5,7 +5,7 @@ from flask_app.models.user_model import User
 
 @app.route('/')
 def welcome():
-    return render_template('pizza.html')
+    return render_template('login_register.html')
 
 
 @app.route('/register/user', methods = ['POST'])

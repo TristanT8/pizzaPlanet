@@ -46,6 +46,27 @@
                     <input class="btn btn-success" type="submit" value="Submit">
                 </form>
             </div>
+            <div class="col-sm">
+                <form action="/user/login" method = 'POST'>
+                    <h4>Login</h4>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages if category == "login" %}
+                                <p>{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="text" name="email">
+                    </div>
+                    <div>
+                        <label for="password">Password:</label>
+                        <input type="password" name="password">
+                    </div>
+                    <input class="btn btn-dark" type="submit" value="Login">
+                </form>
+            </div>
         </div>
     </div>
 </body>
