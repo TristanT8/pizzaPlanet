@@ -12,7 +12,7 @@ class Pizza:
         self.dough = pizza_data['dough']
         self.sauce_base = pizza_data['sauce_base']
         self.meat = pizza_data['meat']
-        self.toppings = pizza_data['toppings']
+        self.vegetables = pizza_data['vegetables']
         self.created_at = pizza_data['created_at']
         self.updated_at = pizza_data['updated_at']
         self.user_id = pizza_data['user_id']
@@ -21,7 +21,7 @@ class Pizza:
 
     @classmethod
     def create_pizza(cls, data):
-        query = "INSERT INTO pizza (baker, dough, sauce_base, meat, toppings, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(meat)s, %(toppings)s, %(user_id)s);"
+        query = "INSERT INTO pizza (baker, dough, sauce_base, meat, vegetables, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(meat)s, %(vegetables)s, %(user_id)s);"
         return connectToMySQL(cls.my_db).query_db(query, data)
 
 
@@ -58,7 +58,7 @@ class Pizza:
 
     @classmethod
     def update_pizza(cls, data):
-        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, meat = %(meat)s, toppings = %(toppings)s;"
+        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, meat = %(meat)s, vegetables = %(vegetables)s;"
         result = connectToMySQL(cls.my_db).query_db(query, data)
         return result
 
@@ -84,7 +84,7 @@ class Pizza:
         if not pizza_data['meat']:
             flash("Meat name cannot be blank.")
             is_valid = False
-        if not pizza_data['toppings']:
-            flash("Toppings cannot be blank.")
+        if not pizza_data['vegetables']:
+            flash("Vegetables cannot be blank.")
             is_valid = False
         return is_valid
