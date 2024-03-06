@@ -9,7 +9,7 @@ def pizza_home():
     if "user_id" not in session:
         return redirect('/')
     user = User.one_user({"id" : session['user_id']})
-    return render_template('index.html', user = user, pizza = Pizza.get_all_pizzas())
+    return render_template('home_page.html', user = user, pizza = Pizza.get_all_pizzas())
 
 
 @app.route('/new/pizza')
