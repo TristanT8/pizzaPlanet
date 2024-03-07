@@ -32,7 +32,7 @@ def validate_pizza():
         "dough" : request.form['dough'],
         "sauce_base" : request.form['sauce_base'],
         "meat" : request.form['meat'],
-        "toppings" : request.form['toppings']
+        "vegetables" : request.form['vegetables']
     }
 
     Pizza.create_pizza(data)

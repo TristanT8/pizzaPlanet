@@ -34,7 +34,7 @@ class Pizza:
 
     @classmethod
     def get_all_pizzas(cls):
-        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = user.id"
+        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = users.id"
         result = connectToMySQL(cls.my_db).query_db(query)
         if not result:
             return []
@@ -72,19 +72,19 @@ class Pizza:
     @staticmethod
     def validate_pizza(pizza_data):
         is_valid = True
-        if not pizza_data['baker']:
-            flash("Baker's name cannot be blank.")
+        if len(pizza_data['baker']) < 3:
+            flash("Name must be at least 3 characters long.")
             is_valid = False
-        if not pizza_data['dough']:
-            flash("Dough name cannot be blank.")
+        if pizza_data['dough'] == '':
+            flash("Please select a dough.")
             is_valid = False
-        if not pizza_data['sauce_base']:
-            flash("Sauce base name cannot be blank.")
+        if pizza_data['sauce_base'] == '':
+            flash("Please select a sauce base.")
             is_valid = False
-        if not pizza_data['meat']:
-            flash("Meat name cannot be blank.")
+        if not pizza_data.getlist('meat'):
+            flash("Please select which protein you'd like.")
             is_valid = False
-        if not pizza_data['vegetables']:
-            flash("Vegetables cannot be blank.")
+        if not pizza_data.getlist('vegetables'):
+            flash("Please choose your veggies.")
             is_valid = False
         return is_valid
