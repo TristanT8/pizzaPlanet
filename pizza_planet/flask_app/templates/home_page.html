@@ -13,5 +13,34 @@
         <a class="btn btn-success" href="/new/pizza ">Create Pizza</a>
         <a class="btn btn-dark" href="/user/logout">Logout</a>
     </div>
+
+    <div>
+        <h3>Pizza Creations:</h3>
+        <table class="table table-light table-striped table-hover table-sm text-center">
+            <thead>
+                <tr>
+                    <th>Baker</th>
+                    <th>Dough</th>
+                    <th>Sauce Base</th>
+                    <th>Meat</th>
+                    <th>Vegetables</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for pizza in pizza %}
+                <tr>
+                    <td>{{pizza.baker}}</td>
+                    <td>{{pizza.dough}}</td>
+                    <td>{{pizza.sauce_base}}</td>
+                    <td>{{pizza.meat}}</td>
+                    <td>{{pizza.vegetables}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

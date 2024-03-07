@@ -10,6 +10,9 @@
         .form-group {
             margin-bottom: 10px;
         }
+        .flash-message {
+            color: red;
+        }
     </style>
     <title>Welcome Page</title>
 </head>
@@ -25,7 +28,7 @@
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages if category == "register" %}
-                                <p>{{message}}</p>
+                                <p class="flash-message">{{message}}</p>
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
@@ -53,7 +56,7 @@
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages if category == "login" %}
-                                <p>{{message}}</p>
+                                <p class="flash-message">{{message}}</p>
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
@@ -61,7 +64,7 @@
                         <input type="text" name="email" placeholder="Email">
                     </div>
                     <div class="form-group"> <!-- Add form-group class here -->
-                        <input type="text" name="password" placeholder="Password">
+                        <input type="password" name="password" placeholder="Password">
                     </div>
                     <input class="btn btn-outline-success" type="submit" value="Login">
                 </form>
