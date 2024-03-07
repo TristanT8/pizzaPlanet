@@ -73,7 +73,7 @@ class Pizza:
     def validate_pizza(pizza_data):
         is_valid = True
         if len(pizza_data['baker']) < 3:
-            flash("Name must be at least 3 characters long.")
+            flash("Baker name must be at least 3 characters long.")
             is_valid = False
         if pizza_data['dough'] == '':
             flash("Please select a dough.")
