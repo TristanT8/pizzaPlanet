@@ -31,6 +31,7 @@ def validate_pizza():
         "baker" : request.form['baker'],
         "dough" : request.form['dough'],
         "sauce_base" : request.form['sauce_base'],
+        "cheese" : request.form['cheese'],
         "meat" : request.form['meat'],
         "vegetables" : request.form['vegetables']
     }
@@ -66,6 +67,7 @@ def post_edit_pizza(id):
         "baker" : request.form['baker'],
         "dough" : request.form['dough'],
         "sauce_base" : request.form['sauce_base'],
+        "cheese" : request.form['cheese'],
         "meat" : request.form['meat'],
         "toppings" : request.form['toppings']
     }
