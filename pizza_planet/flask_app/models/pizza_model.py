@@ -11,6 +11,7 @@ class Pizza:
         self.baker = pizza_data['baker']
         self.dough = pizza_data['dough']
         self.sauce_base = pizza_data['sauce_base']
+        self.cheese = pizza_data['cheese']
         self.meat = pizza_data['meat']
         self.vegetables = pizza_data['vegetables']
         self.created_at = pizza_data['created_at']
@@ -21,7 +22,7 @@ class Pizza:
 
     @classmethod
     def create_pizza(cls, data):
-        query = "INSERT INTO pizza (baker, dough, sauce_base, meat, vegetables, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(meat)s, %(vegetables)s, %(user_id)s);"
+        query = "INSERT INTO pizza (baker, dough, sauce_base, cheese, meat, vegetables, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(cheese)s,  %(meat)s, %(vegetables)s, %(user_id)s);"
         return connectToMySQL(cls.my_db).query_db(query, data)
 
 
@@ -58,7 +59,7 @@ class Pizza:
 
     @classmethod
     def update_pizza(cls, data):
-        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, meat = %(meat)s, vegetables = %(vegetables)s;"
+        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, cheese = %(cheese)s,  meat = %(meat)s, vegetables = %(vegetables)s;"
         result = connectToMySQL(cls.my_db).query_db(query, data)
         return result
 
@@ -75,11 +76,14 @@ class Pizza:
         if len(pizza_data['baker']) < 3:
             flash("Baker name must be at least 3 characters long.")
             is_valid = False
-        if pizza_data['dough'] == '':
-            flash("Please select a dough.")
+        if not pizza_data.getlist('dough'):
+            flash("Please select which dough you'd like.")
             is_valid = False
-        if pizza_data['sauce_base'] == '':
-            flash("Please select a sauce base.")
+        if not pizza_data.getlist('sauce_base'):
+            flash("Please select which sauce you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('cheese'):
+            flash("Please select which cheese you'd like.")
             is_valid = False
         if not pizza_data.getlist('meat'):
             flash("Please select which protein you'd like.")
