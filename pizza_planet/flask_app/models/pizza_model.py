@@ -22,6 +22,10 @@ class Pizza:
 
     @classmethod
     def create_pizza(cls, data):
+        data['sauce_base'] = ', '.join(data.getlist('sauce_base'))
+        data['cheese'] = ', '.join(data.getlist('cheese'))
+        data['meat'] = ', '.join(data.getlist('meat'))
+        data['vegetables'] = ', '.join(data.getlist('vegetables'))
         query = "INSERT INTO pizza (baker, dough, sauce_base, cheese, meat, vegetables, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(cheese)s,  %(meat)s, %(vegetables)s, %(user_id)s);"
         return connectToMySQL(cls.my_db).query_db(query, data)
 
@@ -30,7 +34,14 @@ class Pizza:
     def get_pizza(cls, data):
         query = "SELECT * FROM pizza WHERE pizza.id = %(id)s"
         result = connectToMySQL(cls.my_db).query_db(query, data)
-        return cls(result[0])
+        if not result:
+            return None
+        pizza_data = result[0]
+        pizza_data['sauce_base'] = pizza_data['sauce_base'].split(', ')
+        pizza_data['cheese'] = pizza_data['cheese'].split(', ')
+        pizza_data['meat'] = pizza_data['meat'].split(', ')
+        pizza_data['vegetables'] = pizza_data['vegetables'].split(', ')
+        return cls(pizza_data)
 
 
     @classmethod
