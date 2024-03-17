@@ -11,6 +11,9 @@
             margin-top: 25px;
             margin-bottom: 25px;
         }
+        .checkbox-margin {
+            margin-bottom: 10px;
+        }
     </style>
     <title>Create Pizza</title>
 </head>
@@ -38,14 +41,14 @@
                     <label for="baker">Baker:</label>
                     <input type="text" name="baker" id="baker" class="form-control">
                 </div>
-                <div>
+                <div class="checkbox-margin">
                     <label for="dough">Dough:</label><br>
                     <input type="radio" name="dough" value="other"> Normal<br>
                     <input type="radio" name="dough" value="thin-crust"> Thin Crust<br>
                     <input type="radio" name="dough" value="thick-crust"> Thick Crust<br>
                     <input type="radio" name="dough" value="stuffed-crust"> Stuffed Crust<br>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 checkbox-margin">
                     <label for="sauce" class="form-label">Sauce:</label><br>
                     <div class="row">
                         <div class="col-md-3">
@@ -62,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 checkbox-margin">
                     <label for="cheese" class="form-label">Cheese:</label><br>
                     <div class="row">
                         <div class="col-md-3">
@@ -80,7 +83,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-6 checkbox-margin">
                     <label for="meat" class="form-label">Meat:</label><br>
                     <div class="row">
                         <div class="col-md-3">
@@ -105,12 +108,18 @@
                             <input type="checkbox" name="meat" value="chicken"> Chicken
                         </div>
                         <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="ground_beef"> Ground Beef
+                        </div>
+                        <div class="col-md-3">
                             <input type="checkbox" name="meat" value="salami"> Salami
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="no_meat"> None
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-6 checkbox-margin">
                     <label for="vegetables" class="form-label">Vegetables:</label><br>
                     <div class="row">
                         <div class="col-md-3">
@@ -142,6 +151,9 @@
                         </div>
                         <div class="col-md-3">
                             <input type="checkbox" name="vegetables" value="artichoke"> Artichoke
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="no_veg"> None
                         </div>
                     </div>
                 </div>
