@@ -25,15 +25,19 @@ def validate_pizza():
         return redirect('/')
     if not Pizza.validate_pizza(request.form):
         return redirect('/new/pizza')
+    selected_sauce = ', '.join(request.form.getlist('sauce_base'))
+    selected_cheese = ', '.join(request.form.getlist('cheese'))
+    selected_meat = ', '.join(request.form.getlist('meat'))
+    selected_vegetables = ', '.join(request.form.getlist('vegetables'))
 
     data = {
         "user_id" : session['user_id'],
         "baker" : request.form['baker'],
         "dough" : request.form['dough'],
-        "sauce_base" : request.form['sauce_base'],
-        "cheese" : request.form['cheese'],
-        "meat" : request.form['meat'],
-        "vegetables" : request.form['vegetables']
+        "sauce_base" : selected_sauce,
+        "cheese" : selected_cheese,
+        "meat" : selected_meat,
+        "vegetables" : selected_vegetables
     }
 
     Pizza.create_pizza(data)
