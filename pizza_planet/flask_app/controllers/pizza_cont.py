@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, flash
 from flask_app.models.pizza_model import Pizza
 from flask_app.models.user_model import User
 
@@ -69,21 +69,24 @@ def edit_pizza(id):
     return render_template('edit_pizza.html', pizza = pizza)
 
 
-@app.route('/post/edit/pizza/<int:id>', methods = ['POST'])
+@app.route('/post/edit/pizza/<int:id>', methods=['POST'])
 def post_edit_pizza(id):
     if 'user_id' not in session:
         return redirect('/')
 
+    # Check if pizza data validation passes
     if not Pizza.validate_pizza(request.form):
-        return redirect(f'/edit/pizza{id}')
+        flash('Invalid pizza data. Please check your inputs.', 'error')
+        return redirect(f'/edit/pizza/{id}')
+
     data = {
-        'id' : id,
-        "baker" : request.form['baker'],
-        "dough" : request.form['dough'],
-        "sauce_base" : request.form['sauce_base'],
-        "cheese" : request.form['cheese'],
-        "meat" : request.form['meat'],
-        "vegetables" : request.form['vegetables']
+        'id': id,
+        "baker": request.form['baker'],
+        "dough": request.form['dough'],
+        "sauce_base": ', '.join(request.form.getlist('sauce_base')),
+        "cheese": ', '.join(request.form.getlist('cheese')),
+        "meat": ', '.join(request.form.getlist('meat')),
+        "vegetables": ', '.join(request.form.getlist('vegetables'))
     }
 
     Pizza.update_pizza(data)

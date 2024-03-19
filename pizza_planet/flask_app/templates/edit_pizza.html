@@ -47,7 +47,7 @@
                     {% for sauce_option in ['Red', 'Spicy_Red', 'White', 'Barbecue'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="sauce_base" value="{{ sauce_option }}" id="{{ sauce_option }}" {% if sauce_option in pizza.sauce_base %} checked {% endif %}>
-                        <label class="form-check-label" for="{{ sauce_option }}">{{ sauce_option }}</label>
+                        <label class="form-check-label" for="{{ sauce_option }}">{{ sauce_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -56,7 +56,7 @@
                     {% for cheese_option in ['Normal', 'Extra_Cheese', 'Shaved_Parmesan', 'Feta'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="cheese" value="{{ cheese_option }}" id="{{ cheese_option }}" {% if cheese_option in pizza.cheese %} checked {% endif %}>
-                        <label class="form-check-label" for="{{ cheese_option }}">{{ cheese_option }}</label>
+                        <label class="form-check-label" for="{{ cheese_option }}">{{ cheese_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -68,7 +68,7 @@
                     {% for meat_option in ['Pepperoni', 'Sausage', 'Bacon', 'Ham', 'Meatballs', 'Anchovies', 'Chicken', 'Ground_Beef', 'Salami', 'No_Meat'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="meat" value="{{ meat_option }}" id="{{ meat_option }}" {% if meat_option in pizza.meat %} checked {% endif %}>
-                        <label class="form-check-label" for="{{ meat_option }}">{{ meat_option }}</label>
+                        <label class="form-check-label" for="{{ meat_option }}">{{ meat_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -77,7 +77,7 @@
                     {% for veggie_option in ['Mushrooms', 'Green_Peppers', 'Onions', 'Olives', 'Banana_Peppers', 'Jalapenos', 'Spinach', 'Tomatoes', 'Pineapple', 'Artichoke', 'No_Vegetables'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="vegetables" value="{{ veggie_option }}" id="{{ veggie_option }}" {% if veggie_option in pizza.vegetables %} checked {% endif %}>
-                        <label class="form-check-label" for="{{ veggie_option }}">{{ veggie_option }}</label>
+                        <label class="form-check-label" for="{{ veggie_option }}">{{ veggie_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
                 </div>
