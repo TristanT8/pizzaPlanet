@@ -39,9 +39,9 @@
                     <td>{{ pizza.meat|replace("_", " ") }}</td>
                     <td>{{ pizza.vegetables|replace("_", " ") }}</td>
                     <td>
-                        <a href="/single_pizza/{{ pizza.id }}" class="btn btn-success">View Pizza</a>
+                        <a href="/single_pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
                         {% if session['user_id'] == pizza.creator.id %}
-                            <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-secondary">Edit Pizza</a>
+                            <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-outline-secondary">Edit Pizza</a>
                             <!-- Button to open the delete confirmation modal -->
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ pizza.id }}">
                                 Delete Pizza

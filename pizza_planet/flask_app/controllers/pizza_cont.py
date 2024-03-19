@@ -83,7 +83,7 @@ def post_edit_pizza(id):
         "sauce_base" : request.form['sauce_base'],
         "cheese" : request.form['cheese'],
         "meat" : request.form['meat'],
-        "toppings" : request.form['toppings']
+        "vegetables" : request.form['vegetables']
     }
 
     Pizza.update_pizza(data)
