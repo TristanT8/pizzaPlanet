@@ -19,26 +19,35 @@ def new_pizza():
     return render_template('new_pizza.html')
 
 
-@app.route('/validate/pizza', methods = ['POST'])
+@app.route('/validate/pizza', methods=['POST'])
 def validate_pizza():
     if 'user_id' not in session:
         return redirect('/')
+    
+    # Print request form data
+    print(request.form)
+
+    # Check if pizza data validation passes
     if not Pizza.validate_pizza(request.form):
         return redirect('/new/pizza')
+    
     selected_sauce = ', '.join(request.form.getlist('sauce_base'))
     selected_cheese = ', '.join(request.form.getlist('cheese'))
     selected_meat = ', '.join(request.form.getlist('meat'))
     selected_vegetables = ', '.join(request.form.getlist('vegetables'))
+    print(selected_sauce, selected_cheese, selected_meat, selected_vegetables)
 
     data = {
-        "user_id" : session['user_id'],
-        "baker" : request.form['baker'],
-        "dough" : request.form['dough'],
-        "sauce_base" : selected_sauce,
-        "cheese" : selected_cheese,
-        "meat" : selected_meat,
-        "vegetables" : selected_vegetables
+        "user_id": session['user_id'],
+        "baker": request.form['baker'],
+        "dough": request.form['dough'],
+        "sauce_base": selected_sauce,
+        "cheese": selected_cheese,
+        "meat": selected_meat,
+        "vegetables": selected_vegetables
     }
+
+    print(data)  # Check the final data before inserting into the database
 
     Pizza.create_pizza(data)
     return redirect('/dashboard')
