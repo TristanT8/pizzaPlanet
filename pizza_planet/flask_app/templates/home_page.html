@@ -33,11 +33,11 @@
                 {% for pizza in pizza %}
                 <tr>
                     <td>{{pizza.baker}}</td>
-                    <td>{{pizza.dough}}</td>
-                    <td>{{pizza.sauce_base}}</td>
-                    <td>{{pizza.cheese}}</td>
-                    <td>{{pizza.meat}}</td>
-                    <td>{{pizza.vegetables}}</td>
+                    <td>{{ pizza.dough|replace("_", " ") }}</td>
+                    <td>{{ pizza.sauce_base|replace("_", " ") }}</td>
+                    <td>{{ pizza.cheese|replace("_", " ") }}</td>
+                    <td>{{ pizza.meat|replace("_", " ") }}</td>
+                    <td>{{ pizza.vegetables|replace("_", " ") }}</td>
                     <td>
                         <a href="/single_pizza/{{pizza.id}}" class="btn btn-success">View Pizza</a>
                         {% if session['user_id'] == pizza.creator.id %}
