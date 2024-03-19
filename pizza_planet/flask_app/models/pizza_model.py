@@ -22,10 +22,6 @@ class Pizza:
 
     @classmethod
     def create_pizza(cls, data):
-        data['sauce_base'] = ', '.join(data.getlist('sauce_base'))
-        data['cheese'] = ', '.join(data.getlist('cheese'))
-        data['meat'] = ', '.join(data.getlist('meat'))
-        data['vegetables'] = ', '.join(data.getlist('vegetables'))
         query = "INSERT INTO pizza (baker, dough, sauce_base, cheese, meat, vegetables, user_id) VALUES (%(baker)s, %(dough)s, %(sauce_base)s, %(cheese)s,  %(meat)s, %(vegetables)s, %(user_id)s);"
         return connectToMySQL(cls.my_db).query_db(query, data)
 

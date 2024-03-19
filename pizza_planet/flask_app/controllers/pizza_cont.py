@@ -53,6 +53,7 @@ def validate_pizza():
     return redirect('/dashboard')
 
 
+
 @app.route('/single_pizza/<int:id>')
 def ome_pizza(id):
     if 'user_id' not in session:
