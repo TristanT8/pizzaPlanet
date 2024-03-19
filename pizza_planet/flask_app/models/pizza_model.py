@@ -15,7 +15,7 @@ class Pizza:
         self.meat = pizza_data['meat']
         self.vegetables = pizza_data['vegetables']
         self.created_at = pizza_data['created_at']
-        self.updated_at = pizza_data['updated_at']
+        self.updated_at = pizza_data.get('updated_at')  # Handle missing 'updated_at'
         self.user_id = pizza_data['user_id']
         self.creator = None
 

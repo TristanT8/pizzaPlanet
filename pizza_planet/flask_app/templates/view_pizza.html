@@ -8,9 +8,29 @@
     <title>View Pizza</title>
 </head>
 <body>
-    <div>
+    <div class="p-5">
         <div>
-            <h1>View Pizza</h1>
+            <h2>View Pizza</h2>
+            <a href="/dashboard" class="btn btn-outline-info">Dashboard</a>
+            <a href="/user/logout" class="btn btn-outline-dark">Logout</a>
+        </div>
+        <div>
+            <h5>Baker: {{pizza.baker}}</h5>
+        </div>
+        <div>
+            <h5>Dough: {{pizza.dough}}</h5>
+        </div>
+        <div>
+            <h5>Sauce Base: {{pizza.sauce_base}}</h5>
+        </div>
+        <div>
+            <h5>Cheese: {{pizza.cheese}}</h5>
+        </div>
+        <div>
+            <h5>Meat: {{pizza.meat}}</h5>
+        </div>
+        <div>
+            <h5>Vegetables: {{pizza.vegetables}}</h5>
         </div>
     </div>
 </body>
