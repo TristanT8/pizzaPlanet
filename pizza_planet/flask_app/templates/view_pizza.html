@@ -8,29 +8,49 @@
     <title>View Pizza</title>
 </head>
 <body>
-    <div class="p-5">
-        <div>
+    <div class="container py-5">
+        <div class="mb-3">
             <h2>View Pizza</h2>
             <a href="/dashboard" class="btn btn-outline-info">Dashboard</a>
             <a href="/user/logout" class="btn btn-outline-dark">Logout</a>
         </div>
-        <div>
-            <h5>Baker: {{pizza.baker}}</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Baker:</h5>
+                <p>{{pizza.baker}}</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Dough:</h5>
+                <p>{{pizza.dough}}</p>
+            </div>
         </div>
-        <div>
-            <h5>Dough: {{pizza.dough}}</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Sauce Base:</h5>
+                {% for sauce in pizza.sauce_base %}
+                <p>{{ sauce }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <h5>Cheese:</h5>
+                {% for cheese in pizza.cheese %}
+                <p>{{ cheese }}</p>
+                {% endfor %}
+            </div>
         </div>
-        <div>
-            <h5>Sauce Base: {{pizza.sauce_base}}</h5>
-        </div>
-        <div>
-            <h5>Cheese: {{pizza.cheese}}</h5>
-        </div>
-        <div>
-            <h5>Meat: {{pizza.meat}}</h5>
-        </div>
-        <div>
-            <h5>Vegetables: {{pizza.vegetables}}</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Meat:</h5>
+                {% for meat in pizza.meat %}
+                <p>{{ meat }}</p>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <h5>Vegetables:</h5>
+                {% for veggie in pizza.vegetables %}
+                <p>{{ veggie }}</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>
