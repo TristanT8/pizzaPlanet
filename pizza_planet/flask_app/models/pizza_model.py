@@ -42,7 +42,7 @@ class Pizza:
 
     @classmethod
     def get_all_pizzas(cls):
-        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = users.id
+        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = users.id"
         result = connectToMySQL(cls.my_db).query_db(query)
         if not result:
             return []
