@@ -99,6 +99,3 @@ class Pizza:
             flash("Please choose your veggies.")
             is_valid = False
         return is_valid
-    
-    
-    
