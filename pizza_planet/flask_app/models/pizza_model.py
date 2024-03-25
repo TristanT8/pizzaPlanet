@@ -99,3 +99,40 @@ class Pizza:
             flash("Please choose your veggies.")
             is_valid = False
         return is_valid
+    
+    
+        @classmethod
+    def update_pizza(cls, data):
+        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, cheese = %(cheese)s,  meat = %(meat)s, vegetables = %(vegetables)s;"
+        result = connectToMySQL(cls.my_db).query_db(query, data)
+        return result
+
+
+    @classmethod
+    def delete_pizza(cls, data):
+        query = "DELETE FROM pizza WHERE pizza.id = %(id)s;"
+        return connectToMySQL(cls.my_db).query_db(query, data)
+
+
+    @staticmethod
+    def validate_pizza(pizza_data):
+        is_valid = True
+        if len(pizza_data['baker']) < 3:
+            flash("Baker name must be at least 3 characters long.")
+            is_valid = False
+        if not pizza_data.getlist('dough'):
+            flash("Please select which dough you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('sauce_base'):
+            flash("Please select which sauce you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('cheese'):
+            flash("Please select which cheese you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('meat'):
+            flash("Please select which protein you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('vegetables'):
+            flash("Please choose your veggies.")
+            is_valid = False
+        return is_valid
