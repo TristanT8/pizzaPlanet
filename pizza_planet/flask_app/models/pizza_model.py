@@ -99,3 +99,22 @@ class Pizza:
             flash("Please choose your veggies.")
             is_valid = False
         return is_valid
+
+
+    @classmethod
+    def like_pizza(cls, user_id, pizza_id):
+        # Check if the user already liked the pizza
+        query_check = "SELECT * FROM likes WHERE user_id = %(user_id)s AND pizza_id = %(pizza_id)s"
+        result = connectToMySQL(cls.my_db).query_db(query_check, {'user_id': user_id, 'pizza_id': pizza_id})
+        if result:
+            flash("You already liked this pizza.")
+            return False
+        
+        # Add like
+        query_like = "INSERT INTO likes (user_id, pizza_id) VALUES (%(user_id)s, %(pizza_id)s)"
+        connectToMySQL(cls.my_db).query_db(query_like, {'user_id': user_id, 'pizza_id': pizza_id})
+
+        # Update likes_count in pizza table
+        query_update_likes = "UPDATE pizza SET likes_count = likes_count + 1 WHERE id = %(pizza_id)s"
+        connectToMySQL(cls.my_db).query_db(query_update_likes, {'pizza_id': pizza_id})
+        return True
