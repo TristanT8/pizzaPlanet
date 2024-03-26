@@ -1,7 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app import app
-from flask_app.models.pizza_model import Pizza
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 import re
@@ -20,12 +19,6 @@ class User:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-
-    def like_pizza(self, pizza_id):
-        Pizza.like_pizza(self.id, pizza_id)
-
-    def unlike_pizza(self, pizza_id):
-        Pizza.unlike_pizza(self.id, pizza_id)
 
     @classmethod
     def create_user(cls, form_data):

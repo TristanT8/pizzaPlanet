@@ -17,6 +17,7 @@ class Pizza:
         self.created_at = pizza_data['created_at']
         self.updated_at = pizza_data.get('updated_at')  # Handle missing 'updated_at'
         self.user_id = pizza_data['user_id']
+        self.likes_count = pizza_data['likes_count']
         self.creator = None
 
 

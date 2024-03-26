@@ -14,7 +14,42 @@
         .table {
             padding: 25px;
         }
+        .action-buttons {
+            display: grid;
+            gap: 5px;
+        }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        // Handle like button click
+        $('.like-btn').click(function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+
+            // AJAX request to like pizza
+            $.post('/like_pizza', formData, function(data) {
+                alert(data.message); // Show success message or handle accordingly
+                location.reload(); // Refresh the page after liking
+            });
+        });
+
+        // Handle unlike button click
+        $('.unlike-btn').click(function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+
+            // AJAX request to unlike pizza
+            $.post('/unlike_pizza', formData, function(data) {
+                alert(data.message); // Show success message or handle accordingly
+                location.reload(); // Refresh the page after unliking
+            });
+        });
+    });
+    </script>
     <title>Pizza Planet</title>
 </head>
 <body>
@@ -35,6 +70,7 @@
                     <th>Cheese</th>
                     <th>Meat</th>
                     <th>Vegetables</th>
+                    <th>Likes</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -49,6 +85,28 @@
                     <td>{{ pizza.meat|replace("_", " ") }}</td>
                     <td>{{ pizza.vegetables|replace("_", " ") }}</td>
                     <td>
+                        <!-- Separate row for likes count -->
+                        {{ pizza.likes_count }}
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                        <!-- Action bar for like/unlike buttons and other actions -->
+                        {% if pizza.liked_by_user %}
+                            <!-- Unlike button -->
+                            <form action="/unlike_pizza" method="POST">
+                                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                                <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+                                <button type="submit" class="btn btn-danger">Unlike Pizza</button>
+                            </form>
+                        {% else %}
+                            <!-- Like button -->
+                            <form action="/like_pizza" method="POST">
+                                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                                <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+                                <button type="submit" class="btn btn-success">Like Pizza</button>
+                            </form>
+                        {% endif %}
+                        <!-- Other actions buttons -->
                         <a href="/single_pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
                         {% if session['user_id'] == pizza.creator.id %}
                             <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-outline-secondary">Edit Pizza</a>
@@ -57,24 +115,9 @@
                                 Delete Pizza
                             </button>
                             <!-- Delete confirmation modal -->
-                            <div class="modal fade" id="deleteModal{{ pizza.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want to delete this pizza?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <a href="/pizza/delete/{{ pizza.id }}" class="btn btn-danger">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Modal content here -->
                         {% endif %}
+                        </div>
                     </td>
                 </tr>
                 {% endfor %}
