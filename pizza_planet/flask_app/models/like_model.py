@@ -1,7 +1,6 @@
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models.user_model import User
-from flask_app.models.pizza_model import Pizza
+
 from flask import flash
 
 class Like:
