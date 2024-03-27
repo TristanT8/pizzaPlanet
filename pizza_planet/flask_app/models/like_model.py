@@ -35,3 +35,12 @@ class Like:
         query_update_likes = "UPDATE pizza SET likes_count = likes_count - 1 WHERE id = %(pizza_id)s"
         connectToMySQL(cls.my_db).query_db(query_update_likes, {'pizza_id': pizza_id})
 
+    @classmethod
+    def has_liked(cls, user_id, pizza_id):
+        query = "SELECT * FROM likes WHERE user_id = %(user_id)s AND pizza_id = %(pizza_id)s"
+        data = {
+            'user_id': user_id,
+            'pizza_id': pizza_id
+        }
+        result = connectToMySQL('pizza_planet').query_db(query, data)
+        return bool(result)
