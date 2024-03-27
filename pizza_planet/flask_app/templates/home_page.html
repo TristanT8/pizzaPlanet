@@ -15,41 +15,51 @@
             padding: 25px;
         }
         .action-buttons {
-            display: grid;
+            display: flex;
+            justify-content: center;
             gap: 5px;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        // Handle like button click
-        $('.like-btn').click(function(e) {
-            e.preventDefault();
-            var form = $(this).closest('form');
-            var formData = form.serialize();
-
-            // AJAX request to like pizza
-            $.post('/like_pizza', formData, function(data) {
-                alert(data.message); // Show success message or handle accordingly
-                location.reload(); // Refresh the page after liking
+        $(document).ready(function() {
+            // Function to toggle like/unlike buttons
+            function toggleLikeButtons(form, isLiked) {
+                if (isLiked) {
+                    form.find('button').text('Unlike Pizza').removeClass('btn-success').addClass('btn-danger');
+                } else {
+                    form.find('button').text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
+                }
+            }
+    
+            // Handle like button click
+            $('.like-btn').click(function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                var formData = form.serialize();
+    
+                // AJAX request to like pizza
+                $.post('/like_pizza', formData, function(data) {
+                    alert(data.message); // Show success message or handle accordingly
+                    toggleLikeButtons(form, true); // Update button state to unlike
+                });
+            });
+    
+            // Handle unlike button click
+            $('.unlike-btn').click(function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                var formData = form.serialize();
+    
+                // AJAX request to unlike pizza
+                $.post('/unlike_pizza', formData, function(data) {
+                    alert(data.message); // Show success message or handle accordingly
+                    toggleLikeButtons(form, false); // Update button state to like
+                });
             });
         });
-
-        // Handle unlike button click
-        $('.unlike-btn').click(function(e) {
-            e.preventDefault();
-            var form = $(this).closest('form');
-            var formData = form.serialize();
-
-            // AJAX request to unlike pizza
-            $.post('/unlike_pizza', formData, function(data) {
-                alert(data.message); // Show success message or handle accordingly
-                location.reload(); // Refresh the page after unliking
-            });
-        });
-    });
-    </script>
+        </script>
     <title>Pizza Planet</title>
 </head>
 <body>
