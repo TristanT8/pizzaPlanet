@@ -42,7 +42,11 @@
                 // AJAX request to like pizza
                 $.post('/like_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
-                    toggleLikeButtons(form, true); // Update button state to unlike
+                    if (data.liked) {
+                        toggleLikeButtons(form, true); // Update button state to unlike
+                    }
+                }).fail(function() {
+                    alert("Error liking pizza");
                 });
             });
     
@@ -55,11 +59,16 @@
                 // AJAX request to unlike pizza
                 $.post('/unlike_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
-                    toggleLikeButtons(form, false); // Update button state to like
+                    if (!data.liked) {
+                        toggleLikeButtons(form, false); // Update button state to like
+                    }
+                }).fail(function() {
+                    alert("Error unliking pizza");
                 });
             });
         });
-        </script>
+    </script>
+    
     <title>Pizza Planet</title>
 </head>
 <body>
