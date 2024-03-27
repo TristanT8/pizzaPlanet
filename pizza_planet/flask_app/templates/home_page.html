@@ -24,38 +24,39 @@
 
     <script>
         $(document).ready(function() {
-            // Function to toggle like/unlike buttons
+            // Function to toggle like/dislike buttons
             function toggleLikeButtons(form, isLiked) {
+                var button = form.find('button');
                 if (isLiked) {
-                    form.find('button').text('Unlike Pizza').removeClass('btn-success').addClass('btn-danger');
+                    button.text('Dislike Pizza').removeClass('btn-success').addClass('btn-danger');
                 } else {
-                    form.find('button').text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
+                    button.text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
                 }
             }
-    
+
             // Handle like button click
             $('.like-btn').click(function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
                 var formData = form.serialize();
-    
+
                 // AJAX request to like pizza
                 $.post('/like_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
                     if (data.liked) {
-                        toggleLikeButtons(form, true); // Update button state to unlike
+                        toggleLikeButtons(form, true); // Update button state to dislike
                     }
                 }).fail(function() {
                     alert("Error liking pizza");
                 });
             });
-    
-            // Handle unlike button click
+
+            // Handle dislike button click
             $('.unlike-btn').click(function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
                 var formData = form.serialize();
-    
+
                 // AJAX request to unlike pizza
                 $.post('/unlike_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
@@ -63,7 +64,7 @@
                         toggleLikeButtons(form, false); // Update button state to like
                     }
                 }).fail(function() {
-                    alert("Error unliking pizza");
+                    alert("Error disliking pizza");
                 });
             });
         });
@@ -103,10 +104,7 @@
                     <td>{{ pizza.cheese|replace("_", " ") }}</td>
                     <td>{{ pizza.meat|replace("_", " ") }}</td>
                     <td>{{ pizza.vegetables|replace("_", " ") }}</td>
-                    <td>
-                        <!-- Separate row for likes count -->
-                        {{ pizza.likes_count }}
-                    </td>
+                    <td>{{ pizza.likes_count }}</td>
                     <td>
                         <div class="action-buttons">
                         <!-- Action bar for like/unlike buttons and other actions -->
