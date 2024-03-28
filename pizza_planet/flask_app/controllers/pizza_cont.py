@@ -8,8 +8,10 @@ from flask_app.models.user_model import User
 def pizza_home():
     if "user_id" not in session:
         return redirect('/')
-    user = User.one_user({"id" : session['user_id']})
-    return render_template('home_page.html', user = user, pizza = Pizza.get_all_pizzas())
+    user_id = session['user_id']
+    user = User.one_user({"id": user_id})
+    return render_template('home_page.html', user=user, pizza=Pizza.get_all_pizzas())
+
 
 
 @app.route('/new/pizza')

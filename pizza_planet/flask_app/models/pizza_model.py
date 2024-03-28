@@ -42,40 +42,27 @@ class Pizza:
 
 
     @classmethod
-    def get_all_pizzas(cls, user_id):
-        query = """
-            SELECT pizza.*, users.id AS user_id, users.first_name, users.last_name, users.email, users.password, users.created_at AS user_created_at, users.updated_at AS user_updated_at,
-            IFNULL(l.likes_count, 0) AS likes_count,
-            CASE WHEN l.user_id IS NOT NULL THEN 1 ELSE 0 END AS liked_by_user
-            FROM pizza
-            JOIN users ON pizza.user_id = users.id
-            LEFT JOIN (
-                SELECT pizza_id, COUNT(*) AS likes_count
-                FROM likes
-                GROUP BY pizza_id
-            ) l ON pizza.id = l.pizza_id
-            LEFT JOIN likes ON pizza.id = likes.pizza_id AND likes.user_id = %(user_id)s
-        """
-        data = {'user_id': user_id}
-        result = connectToMySQL(cls.my_db).query_db(query, data)
+    def get_all_pizzas(cls):
+        query = "SELECT * FROM pizza JOIN users ON pizza.user_id = users.id"
+        result = connectToMySQL(cls.my_db).query_db(query)
         if not result:
             return []
         all_pizzas = []
         for row in result:
             single_pizza = cls(row)
             user_data = {
-                "id": row['user_id'],
+                "id": row['users.id'],
                 "first_name": row['first_name'],
                 "last_name": row['last_name'],
                 "email": row['email'],
                 "password": row['password'],
-                "created_at": row['user_created_at'],
-                "updated_at": row['user_updated_at']
+                "created_at": row['created_at'],
+                "updated_at": row['updated_at']
             }
+
             single_pizza.creator = User(user_data)
             all_pizzas.append(single_pizza)
         return all_pizzas
-
 
 
     @classmethod

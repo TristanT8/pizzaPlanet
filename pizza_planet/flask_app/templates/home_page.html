@@ -33,13 +33,13 @@
                     button.text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
                 }
             }
-
+        
             // Handle like button click
             $('.like-btn').click(function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
                 var formData = form.serialize();
-
+        
                 // AJAX request to like pizza
                 $.post('/like_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
@@ -50,13 +50,13 @@
                     alert("Error liking pizza");
                 });
             });
-
+        
             // Handle dislike button click
             $('.unlike-btn').click(function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
                 var formData = form.serialize();
-
+        
                 // AJAX request to unlike pizza
                 $.post('/unlike_pizza', formData, function(data) {
                     alert(data.message); // Show success message or handle accordingly
@@ -68,6 +68,7 @@
                 });
             });
         });
+        
     </script>
     
     <title>Pizza Planet</title>
