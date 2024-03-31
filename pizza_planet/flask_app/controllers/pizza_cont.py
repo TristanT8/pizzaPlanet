@@ -2,16 +2,25 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_app.models.pizza_model import Pizza
 from flask_app.models.user_model import User
+from flask_app.models.like_model import Like
 
 
 @app.route('/dashboard')
 def pizza_home():
     if "user_id" not in session:
         return redirect('/')
+    
     user_id = session['user_id']
     user = User.one_user({"id": user_id})
-    return render_template('home_page.html', user=user, pizza=Pizza.get_all_pizzas())
+    pizzas = Pizza.get_all_pizzas()
 
+    # Loop through pizzas to determine if the user liked each pizza
+    for pizza in pizzas:
+        # Check if the current user liked this pizza
+        liked_by_user = Like.has_liked(user_id, pizza.id)
+        pizza.liked_by_user = bool(liked_by_user)  # Convert to boolean
+
+    return render_template('home_page.html', user=user, pizzas=pizzas)
 
 
 @app.route('/new/pizza')

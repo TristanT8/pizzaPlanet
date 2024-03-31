@@ -22,54 +22,55 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            // Function to toggle like/dislike buttons
-            function toggleLikeButtons(form, isLiked) {
-                var button = form.find('button');
-                if (isLiked) {
-                    button.text('Dislike Pizza').removeClass('btn-success').addClass('btn-danger');
-                } else {
-                    button.text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
-                }
+    <!-- Inside your HTML template -->
+<script>
+    $(document).ready(function() {
+        // Function to toggle like/dislike buttons
+        function toggleLikeButtons(form, isLiked) {
+            var button = form.find('button');
+            if (isLiked) {
+                button.text('Dislike Pizza').removeClass('btn-success').addClass('btn-danger');
+            } else {
+                button.text('Like Pizza').removeClass('btn-danger').addClass('btn-success');
             }
-        
-            // Handle like button click
-            $('.like-btn').click(function(e) {
-                e.preventDefault();
-                var form = $(this).closest('form');
-                var formData = form.serialize();
-        
-                // AJAX request to like pizza
-                $.post('/like_pizza', formData, function(data) {
-                    alert(data.message); // Show success message or handle accordingly
-                    if (data.liked) {
-                        toggleLikeButtons(form, true); // Update button state to dislike
-                    }
-                }).fail(function() {
-                    alert("Error liking pizza");
-                });
-            });
-        
-            // Handle dislike button click
-            $('.unlike-btn').click(function(e) {
-                e.preventDefault();
-                var form = $(this).closest('form');
-                var formData = form.serialize();
-        
-                // AJAX request to unlike pizza
-                $.post('/unlike_pizza', formData, function(data) {
-                    alert(data.message); // Show success message or handle accordingly
-                    if (!data.liked) {
-                        toggleLikeButtons(form, false); // Update button state to like
-                    }
-                }).fail(function() {
-                    alert("Error disliking pizza");
-                });
+        }
+
+        // Handle like button click
+        $('.like-btn').click(function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+
+            // AJAX request to like pizza
+            $.post('/like_pizza', formData, function(data) {
+                alert(data.message); // Show success message or handle accordingly
+                if (data.liked) {
+                    toggleLikeButtons(form, true); // Update button state to dislike
+                }
+            }).fail(function() {
+                alert("Error liking pizza");
             });
         });
-        
-    </script>
+
+        // Handle dislike button click
+        $('.unlike-btn').click(function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+
+            // AJAX request to unlike pizza
+            $.post('/unlike_pizza', formData, function(data) {
+                alert(data.message); // Show success message or handle accordingly
+                if (!data.liked) {
+                    toggleLikeButtons(form, false); // Update button state to like
+                }
+            }).fail(function() {
+                alert("Error unliking pizza");
+            });
+        });
+    });
+</script>
+
     
     <title>Pizza Planet</title>
 </head>
