@@ -19,6 +19,9 @@ def pizza_home():
         # Check if the current user liked this pizza
         liked_by_user = Like.has_liked(user_id, pizza.id)
         pizza.liked_by_user = bool(liked_by_user)  # Convert to boolean
+        
+        # Debugging output
+        print(f"User {user_id} liked Pizza {pizza.id}: {pizza.liked_by_user}")
 
     return render_template('home_page.html', user=user, pizzas=pizzas)
 
