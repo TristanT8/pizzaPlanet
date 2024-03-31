@@ -98,49 +98,49 @@
             </thead>
 
             <tbody>
-    {% for pizza in pizzas %}
-    <tr>
-        <td>{{ pizza.baker }}</td>
-        <td>{{ pizza.dough|replace("_", " ") }}</td>
-        <td>{{ pizza.sauce_base|replace("_", " ") }}</td>
-        <td>{{ pizza.cheese|replace("_", " ") }}</td>
-        <td>{{ pizza.meat|replace("_", " ") }}</td>
-        <td>{{ pizza.vegetables|replace("_", " ") }}</td>
-        <td>{{ pizza.likes_count }}</td>
-        <td>
-            <div class="action-buttons">
-            {% if pizza.liked_by_user %}
-                <!-- Unlike button -->
-                <form action="/unlike_pizza" method="POST">
-                    <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
-                    <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
-                    <button type="submit" class="btn btn-danger">Unlike Pizza</button>
-                </form>
-            {% else %}
-                <!-- Like button -->
-                <form action="/like_pizza" method="POST">
-                    <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
-                    <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
-                    <button type="submit" class="btn btn-success">Like Pizza</button>
-                </form>
-            {% endif %}
-            <!-- Other actions buttons -->
-            <a href="/single_pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
-            {% if session['user_id'] == pizza.creator.id %}
-                <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-outline-secondary">Edit Pizza</a>
-                <!-- Button to open the delete confirmation modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ pizza.id }}">
-                    Delete Pizza
-                </button>
-                <!-- Delete confirmation modal -->
-                <!-- Modal content here -->
-            {% endif %}
-            </div>
-        </td>
-    </tr>
-    {% endfor %}
-</tbody>
-
+                {% for pizza in pizzas %}
+                <tr>
+                    <td>{{ pizza.baker }}</td>
+                    <td>{{ pizza.dough|replace("_", " ") }}</td>
+                    <td>{{ pizza.sauce_base|replace("_", " ") }}</td>
+                    <td>{{ pizza.cheese|replace("_", " ") }}</td>
+                    <td>{{ pizza.meat|replace("_", " ") }}</td>
+                    <td>{{ pizza.vegetables|replace("_", " ") }}</td>
+                    <td>{{ pizza.likes_count }}</td>
+                    <td>
+                        <div class="action-buttons">
+                        {% if pizza.liked_by_user %}
+                            <!-- Unlike button -->
+                            <form action="/unlike_pizza" method="POST">
+                                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                                <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+                                <button type="submit" class="btn btn-danger">Unlike Pizza</button>
+                            </form>
+                        {% else %}
+                            <!-- Like button -->
+                            <form action="/like_pizza" method="POST">
+                                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                                <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+                                <button type="submit" class="btn btn-success">Like Pizza</button>
+                            </form>
+                        {% endif %}
+                        <!-- Other actions buttons -->
+                        <a href="/single_pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
+                        {% if session['user_id'] == pizza.creator.id %}
+                            <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-outline-secondary">Edit Pizza</a>
+                            <!-- Button to open the delete confirmation modal -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ pizza.id }}">
+                                Delete Pizza
+                            </button>
+                            <!-- Delete confirmation modal -->
+                            <!-- Modal content here -->
+                        {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
         </table>
     </div>
 </body>
