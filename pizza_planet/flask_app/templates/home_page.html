@@ -125,7 +125,7 @@
                             </form>
                         {% endif %}
                         <!-- Other actions buttons -->
-                        <a href="/single_pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
+                        <a href="/pizza/{{ pizza.id }}" class="btn btn-primary">View Pizza</a>
                         {% if session['user_id'] == pizza.creator.id %}
                             <a href="/edit/pizza/{{ pizza.id }}" class="btn btn-outline-secondary">Edit Pizza</a>
                             <!-- Button to open the delete confirmation modal -->

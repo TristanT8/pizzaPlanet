@@ -3,7 +3,7 @@ from flask import render_template, redirect, request, session, flash
 from flask_app.models.pizza_model import Pizza
 from flask_app.models.user_model import User
 from flask_app.models.like_model import Like
-
+from flask_app.models.comment_model import Comment
 
 @app.route('/dashboard')
 def pizza_home():
@@ -67,12 +67,17 @@ def validate_pizza():
     return redirect('/dashboard')
 
 
-
-@app.route('/single_pizza/<int:id>')
-def ome_pizza(id):
+@app.route('/pizza/<int:pizza_id>')
+def view_pizza(pizza_id):
     if 'user_id' not in session:
         return redirect('/')
-    return render_template('view_pizza.html', pizza = Pizza.get_pizza({'id':id}))
+    pizza = Pizza.get_pizza({'id': pizza_id})
+    if not pizza:
+        flash("Pizza not found.", "error")
+        return redirect('/')
+
+    comments = Comment.get_comments_by_pizza_id(pizza_id)
+    return render_template('view_pizza.html', pizza=pizza, comments=comments)
 
 
 @app.route('/edit/pizza/<int:id>')
