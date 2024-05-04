@@ -55,3 +55,15 @@ def edit_comment(comment_id):
             flash("You are not authorized to edit this comment.", "comment_error")
             return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
 
+@app.route('/delete_comment/<int:comment_id>', methods=['POST'])
+def delete_comment(comment_id):
+    comment = Comment.get_comment_by_id(comment_id)
+    
+    # Check if the current user is the creator of the comment
+    if comment.user_id == session.get('user_id'):
+        Comment.delete_comment(comment_id)
+        flash("Comment deleted successfully.", "comment_success")
+    else:
+        flash("You are not authorized to delete this comment.", "comment_error")
+
+    return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
