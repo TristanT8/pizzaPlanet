@@ -10,8 +10,9 @@ class Comment:
 
     @classmethod
     def create_comment(cls, data):
-        query = "INSERT INTO comments (comment_text, pizza_id) VALUES (%(comment_text)s, %(pizza_id)s);"
+        query = "INSERT INTO comments (comment_text, pizza_id, user_id) VALUES (%(comment_text)s, %(pizza_id)s, %(user_id)s);"
         return connectToMySQL(cls.my_db).query_db(query, data)
+
 
     @classmethod
     def get_comments_by_pizza_id(cls, pizza_id):
