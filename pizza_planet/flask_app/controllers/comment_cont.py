@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, flash
 from flask_app import app
 from flask_app.models.pizza_model import Pizza
 from flask_app.models.comment_model import Comment
@@ -11,7 +11,7 @@ def add_comment():
         
         if not comment_text:
             flash("Comment text is required.", "comment_error")
-            return redirect(url_for('view_pizza', pizza_id=pizza_id))
+            return render_template('view_pizza.html', pizza_id=pizza_id)
 
         data = {
             'comment_text': comment_text,
@@ -19,8 +19,8 @@ def add_comment():
         }
         Comment.create_comment(data)
         flash("Comment added successfully.", "comment_success")
-        return redirect(url_for('view_pizza', pizza_id=pizza_id))
+        return render_template('view_pizza.html', pizza_id=pizza_id)
     else:
-        return redirect(url_for('index'))  # Redirect to home if not a POST request or invalid request
+        return render_template('home_page.html')  # Redirect to home if not a POST request or invalid request
 
 
