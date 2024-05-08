@@ -26,3 +26,30 @@ def add_comment():
         return redirect(url_for('index'))  # Redirect to home if not a POST request or invalid request
 
 
+@app.route('/delete_comment/<int:comment_id>', methods=['POST'])
+def delete_comment(comment_id):
+    # Check if the user is logged in
+    if 'user_id' not in session:
+        flash("You must be logged in to delete a comment.", "error")
+        return redirect(url_for('login'))  # Redirect to login page if user is not logged in
+
+    # Retrieve the comment from the database
+    comment = Comment.get_comment_by_pizza_id(comment_id)
+
+    # Check if the comment exists
+    if comment is None:
+        flash("Comment not found.", "error")
+        return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
+
+    # Check if the user is the creator of the comment
+    if comment.user_id != session['user_id']:
+        flash("You are not authorized to delete this comment.", "error")
+        return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
+
+    # Delete the comment
+    Comment.delete_comment(comment_id)
+
+    flash("Comment deleted successfully.", "success")
+    return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
+
+

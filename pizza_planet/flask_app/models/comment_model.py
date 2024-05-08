@@ -24,4 +24,3 @@ class Comment:
             comments.append(cls(result))
         return comments
 
-from flask_app.config.mysqlconnection import connectToMySQL
