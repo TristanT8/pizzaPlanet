@@ -7,6 +7,8 @@ class Comment:
         self.id = data['id']
         self.comment_text = data['comment_text']
         self.pizza_id = data['pizza_id']
+        self.user_id = data['user_id']
+
 
     @classmethod
     def create_comment(cls, data):
@@ -23,6 +25,18 @@ class Comment:
         for result in results:
             comments.append(cls(result))
         return comments
+
+
+    @classmethod
+    def get_comment_by_id(cls, comment_id):
+        query = "SELECT * FROM comments WHERE id = %(comment_id)s;"
+        data = {"comment_id": comment_id}
+        result = connectToMySQL(cls.my_db).query_db(query, data)
+        if result:
+            return cls(result[0])  # Return the first comment object if found
+        else:
+            return None
+
 
     @classmethod
     def delete_comment(cls, comment_id):

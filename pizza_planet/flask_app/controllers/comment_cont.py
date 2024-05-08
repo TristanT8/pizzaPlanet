@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, flash, session
+from flask import request, redirect, url_for, flash, session, render_template
 from flask_app import app
 from flask_app.models.pizza_model import Pizza
 from flask_app.models.comment_model import Comment
@@ -31,17 +31,17 @@ def delete_comment(comment_id):
     # Check if the user is logged in
     if 'user_id' not in session:
         flash("You must be logged in to delete a comment.", "error")
-        return redirect(url_for('login'))  # Redirect to login page if user is not logged in
+        return redirect(url_for('login_user'))
 
     # Retrieve the comment from the database
-    comment = Comment.get_comment_by_pizza_id(comment_id)
+    comment = Comment.get_comment_by_id(comment_id)
 
     # Check if the comment exists
-    if comment is None:
+    if not comment:
         flash("Comment not found.", "error")
-        return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
+        return redirect(url_for('pizza_home'))
 
-    # Check if the user is the creator of the comment
+    # Check if the logged-in user is the creator of the comment
     if comment.user_id != session['user_id']:
         flash("You are not authorized to delete this comment.", "error")
         return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
@@ -50,6 +50,5 @@ def delete_comment(comment_id):
     Comment.delete_comment(comment_id)
 
     flash("Comment deleted successfully.", "success")
+    # Redirect to the pizza view page after deleting the comment
     return redirect(url_for('view_pizza', pizza_id=comment.pizza_id))
-
-
