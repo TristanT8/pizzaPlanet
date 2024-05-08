@@ -24,3 +24,8 @@ class Comment:
             comments.append(cls(result))
         return comments
 
+    @classmethod
+    def delete_comment(cls, comment_id):
+        query = "DELETE FROM comments WHERE id = %(comment_id)s;"
+        data = {'comment_id': comment_id}
+        return connectToMySQL(cls.my_db).query_db(query, data)
