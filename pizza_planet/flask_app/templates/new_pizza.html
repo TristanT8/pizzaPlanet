@@ -25,7 +25,32 @@
         <div class="margin">
             <h1>Create Your Pizza</h1>
             <a class="btn btn-warning" href="/dashboard">Return Home</a>
-            <a class="btn btn-dark" href="/user/logout">Logout</a>
+            <!-- Button to open logout confirmation modal -->
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                Logout
+            </button>
+        </div>
+
+        <!-- Logout confirmation modal -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to logout?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <!-- Form to submit logout request -->
+                        <form action="/user/logout" method="POST">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="margin">
