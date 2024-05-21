@@ -112,9 +112,16 @@ def post_edit_pizza(id):
     return redirect('/dashboard')
 
 
-@app.route('/pizza/delete/<int:id>')
+@app.route('/pizza/delete/<int:id>', methods=['POST', 'DELETE'])
 def delete_pizza(id):
     if 'user_id' not in session:
         return redirect('/user/login')
-    Pizza.delete_pizza({'id' : id})
+
+    if request.method == 'DELETE':
+        print(f"Deleting pizza with ID: {id}")  # Debugging statement
+        Pizza.delete_pizza({'id': id})
+        flash("Pizza successfully deleted.", "success")
+    else:
+        print(f"Request method: {request.method}")  # Debugging statement
+    
     return redirect('/dashboard')
