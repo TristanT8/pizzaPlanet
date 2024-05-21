@@ -117,8 +117,8 @@ def delete_pizza(id):
     if 'user_id' not in session:
         return redirect('/user/login')
 
-    if request.method == 'DELETE':
-        print(f"Deleting pizza with ID: {id}")  # Debugging statement
+    if request.method == 'DELETE':  # Ensure this block is executed for DELETE requests
+        print(f"Deleting pizza with ID: {id}")  # Log the delete operation
         Pizza.delete_pizza({'id': id})
         flash("Pizza successfully deleted.", "success")
     else:
