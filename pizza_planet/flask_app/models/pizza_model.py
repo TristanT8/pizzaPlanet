@@ -67,9 +67,21 @@ class Pizza:
 
     @classmethod
     def update_pizza(cls, data):
-        query = "UPDATE pizza SET baker = %(baker)s, dough = %(dough)s, sauce_base = %(sauce_base)s, cheese = %(cheese)s,  meat = %(meat)s, vegetables = %(vegetables)s; WHERE id = %(id)s;"
+        query = """
+            UPDATE pizza 
+            SET 
+                baker = %(baker)s, 
+                dough = %(dough)s, 
+                sauce_base = %(sauce_base)s, 
+                cheese = %(cheese)s,  
+                meat = %(meat)s, 
+                vegetables = %(vegetables)s
+            WHERE 
+                id = %(id)s
+        """
         result = connectToMySQL(cls.my_db).query_db(query, data)
         return result
+
 
 
     @classmethod
