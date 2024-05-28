@@ -112,3 +112,50 @@ class Pizza:
             flash("Please choose your veggies.")
             is_valid = False
         return is_valid
+    
+        @staticmethod
+    def validate_pizza(pizza_data):
+        is_valid = True
+        if len(pizza_data['baker']) < 3:
+            flash("Baker name must be at least 3 characters long.")
+            is_valid = False
+        if not pizza_data.getlist('dough'):
+            flash("Please select which dough you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('sauce_base'):
+            flash("Please select which sauce you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('cheese'):
+            flash("Please select which cheese you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('meat'):
+            flash("Please select which protein you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('vegetables'):
+            flash("Please choose your veggies.")
+            is_valid = False
+        return is_valid
+    
+    
+        @staticmethod
+    def validate_pizza(pizza_data):
+        is_valid = True
+        if len(pizza_data['baker']) < 3:
+            flash("Baker name must be at least 3 characters long.")
+            is_valid = False
+        if not pizza_data.getlist('dough'):
+            flash("Please select which dough you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('sauce_base'):
+            flash("Please select which sauce you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('cheese'):
+            flash("Please select which cheese you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('meat'):
+            flash("Please select which protein you'd like.")
+            is_valid = False
+        if not pizza_data.getlist('vegetables'):
+            flash("Please choose your veggies.")
+            is_valid = False
+        return is_valid
