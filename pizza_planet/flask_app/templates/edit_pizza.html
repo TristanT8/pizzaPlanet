@@ -13,6 +13,36 @@
         function confirmLogout() {
             $('#logoutModal').modal('show');
         }
+
+        $(document).ready(function() {
+            // Uncheck all other meats when 'No Meat' is selected
+            $('#No_Meat').change(function() {
+                if(this.checked) {
+                    $('input[name="meat"]').not(this).prop('checked', false);
+                }
+            });
+
+            // Uncheck 'No Meat' if any other meat is selected
+            $('input[name="meat"]').not('#No_Meat').change(function() {
+                if(this.checked) {
+                    $('#No_Meat').prop('checked', false);
+                }
+            });
+
+            // Uncheck all other vegetables when 'No Vegetables' is selected
+            $('#No_Vegetables').change(function() {
+                if(this.checked) {
+                    $('input[name="vegetables"]').not(this).prop('checked', false);
+                }
+            });
+
+            // Uncheck 'No Vegetables' if any other vegetable is selected
+            $('input[name="vegetables"]').not('#No_Vegetables').change(function() {
+                if(this.checked) {
+                    $('#No_Vegetables').prop('checked', false);
+                }
+            });
+        });
     </script>
 </head>
 <body>
