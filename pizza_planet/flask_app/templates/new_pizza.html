@@ -48,6 +48,39 @@
                     $('#No_Vegetables').prop('checked', false);
                 }
             });
+
+            // Enable/Disable custom sauce input based on checkbox
+            $('input[name="sauce_base"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_sauce').prop('disabled', false);
+                    } else {
+                        $('#custom_sauce').prop('disabled', true);
+                    }
+                }
+            });
+
+            // Enable/Disable custom meat input based on checkbox
+            $('input[name="meat"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_meat').prop('disabled', false);
+                    } else {
+                        $('#custom_meat').prop('disabled', true);
+                    }
+                }
+            });
+
+            // Enable/Disable custom vegetable input based on checkbox
+            $('input[name="vegetables"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_vegetable').prop('disabled', false);
+                    } else {
+                        $('#custom_vegetable').prop('disabled', true);
+                    }
+                }
+            });
         });
     </script>
     <title>Create Pizza</title>
@@ -121,11 +154,11 @@
                             <input type="checkbox" name="sauce_base" value="White"> White Sauce
                         </div>
                         <div class="col-md-3">
-                            <input type="checkbox" name="sauce_base" value="Barbecue"> Barbeque Sauce
+                            <input type="checkbox" name="sauce_base" value="Barbecue"> Barbecue Sauce
                         </div>
                         <div class="col-md-3">
-                            <input type="checkbox" name="sauce_base" value="Other:"> Other:
-                            <input type="text" name="sauce_base" class="form-control">
+                            <input type="checkbox" name="sauce_base" value="Other"> Other:
+                            <input type="text" name="custom_sauce" id="custom_sauce" class="form-control" disabled>
                         </div>
                     </div>
                 </div>
@@ -139,7 +172,7 @@
                             <input type="checkbox" name="cheese" value="Extra_Cheese"> Extra Cheese
                         </div>
                         <div class="col-md-3">
-                            <input type="checkbox" name="cheese" value="Shaved_Parmesean"> Shaved Parmesean
+                            <input type="checkbox" name="cheese" value="Shaved_Parmesean"> Shaved Parmesan
                         </div>
                         <div class="col-md-3">
                             <input type="checkbox" name="cheese" value="Feta"> Feta Cheese
@@ -180,6 +213,10 @@
                         <div class="col-md-3">
                             <input type="checkbox" name="meat" value="No_Meat" id="No_Meat"> No Meat
                         </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Other"> Other:
+                            <input type="text" name="custom_meat" id="custom_meat" class="form-control" disabled>
+                        </div>
                     </div>
                 </div>
                 
@@ -219,11 +256,16 @@
                         <div class="col-md-3">
                             <input type="checkbox" name="vegetables" value="No_Vegetables" id="No_Vegetables"> No Vegetables
                         </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Other"> Other:
+                            <input type="text" name="custom_vegetable" id="custom_vegetable" class="form-control" disabled>
+                        </div>
                     </div>
                 </div>
-                
+                <div class="margin">
+                    <button type="submit" class="btn btn-primary">Create Pizza</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-success mt-2 border border-1 margin">Create</button>
         </form>
     </div>
 </body>
