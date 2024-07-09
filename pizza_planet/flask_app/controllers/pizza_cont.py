@@ -49,6 +49,23 @@ def validate_pizza():
     selected_cheese = ', '.join(request.form.getlist('cheese'))
     selected_meat = ', '.join(request.form.getlist('meat'))
     selected_vegetables = ', '.join(request.form.getlist('vegetables'))
+
+    # Handle custom values for sauces, meats, and vegetables
+    if 'Other' in request.form.getlist('sauce_base'):
+        custom_sauce = request.form.get('custom_sauce')
+        if custom_sauce:
+            selected_sauce += f': {custom_sauce}'
+
+    if 'Other' in request.form.getlist('meat'):
+        custom_meat = request.form.get('custom_meat')
+        if custom_meat:
+            selected_meat += f': {custom_meat}'
+
+    if 'Other' in request.form.getlist('vegetables'):
+        custom_vegetable = request.form.get('custom_vegetable')
+        if custom_vegetable:
+            selected_vegetables += f': {custom_vegetable}'
+
     print(selected_sauce, selected_cheese, selected_meat, selected_vegetables)
 
     data = {
