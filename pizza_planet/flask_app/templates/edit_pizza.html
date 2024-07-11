@@ -42,6 +42,47 @@
                     $('#No_Vegetables').prop('checked', false);
                 }
             });
+
+            // Show or hide custom input fields based on checkbox selections
+            $('#Other_Sauce').change(function() {
+                if(this.checked) {
+                    $('#custom_sauce_container').show();
+                } else {
+                    $('#custom_sauce_container').hide();
+                }
+            });
+
+            $('#Other_Meat').change(function() {
+                if(this.checked) {
+                    $('#custom_meat_container').show();
+                } else {
+                    $('#custom_meat_container').hide();
+                }
+            });
+
+            $('#Other_Vegetable').change(function() {
+                if(this.checked) {
+                    $('#custom_vegetable_container').show();
+                } else {
+                    $('#custom_vegetable_container').hide();
+                }
+            });
+
+            // Autofill custom input fields if they contain values
+            if ($('#custom_sauce').val()) {
+                $('#Other_Sauce').prop('checked', true);
+                $('#custom_sauce_container').show();
+            }
+
+            if ($('#custom_meat').val()) {
+                $('#Other_Meat').prop('checked', true);
+                $('#custom_meat_container').show();
+            }
+
+            if ($('#custom_vegetable').val()) {
+                $('#Other_Vegetable').prop('checked', true);
+                $('#custom_vegetable_container').show();
+            }
         });
     </script>
 </head>
@@ -102,12 +143,15 @@
             <div class="row my-3">
                 <div class="col-md-6">
                     <label class="form-label">Sauce:</label><br>
-                    {% for sauce_option in ['Red', 'Spicy_Red', 'White', 'Barbecue'] %}
+                    {% for sauce_option in ['Red', 'Spicy_Red', 'White', 'Barbecue', 'Other'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="sauce_base" value="{{ sauce_option }}" id="{{ sauce_option }}" {% if sauce_option in pizza.sauce_base %} checked {% endif %}>
                         <label class="form-check-label" for="{{ sauce_option }}">{{ sauce_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
+                    <div id="custom_sauce_container" style="display:none;">
+                        <input type="text" name="custom_sauce" id="custom_sauce" class="form-control mt-2" placeholder="Custom Sauce" value="{{ pizza.custom_sauce }}">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Cheese:</label><br>
@@ -123,21 +167,27 @@
             <div class="row my-3">
                 <div class="col-md-6">
                     <label class="form-label">Meat:</label><br>
-                    {% for meat_option in ['Pepperoni', 'Sausage', 'Bacon', 'Ham', 'Meatballs', 'Anchovies', 'Chicken', 'Ground_Beef', 'Salami', 'No_Meat'] %}
+                    {% for meat_option in ['Pepperoni', 'Sausage', 'Bacon', 'Ham', 'Meatballs', 'Anchovies', 'Chicken', 'Ground_Beef', 'Salami', 'No_Meat', 'Other'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="meat" value="{{ meat_option }}" id="{{ meat_option }}" {% if meat_option in pizza.meat %} checked {% endif %}>
                         <label class="form-check-label" for="{{ meat_option }}">{{ meat_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
+                    <div id="custom_meat_container" style="display:none;">
+                        <input type="text" name="custom_meat" id="custom_meat" class="form-control mt-2" placeholder="Custom Meat" value="{{ pizza.custom_meat }}">
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Vegetables:</label><br>
-                    {% for veggie_option in ['Mushrooms', 'Green_Peppers', 'Onions', 'Olives', 'Banana_Peppers', 'Jalapenos', 'Spinach', 'Tomatoes', 'Pineapple', 'Artichoke', 'No_Vegetables'] %}
+                    {% for veggie_option in ['Mushrooms', 'Green_Peppers', 'Onions', 'Olives', 'Banana_Peppers', 'Jalapenos', 'Spinach', 'Tomatoes', 'Pineapple', 'Artichoke', 'No_Vegetables', 'Other'] %}
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="vegetables" value="{{ veggie_option }}" id="{{ veggie_option }}" {% if veggie_option in pizza.vegetables %} checked {% endif %}>
                         <label class="form-check-label" for="{{ veggie_option }}">{{ veggie_option|replace("_", " ") }}</label>
                     </div>
                     {% endfor %}
+                    <div id="custom_vegetable_container" style="display:none;">
+                        <input type="text" name="custom_vegetable" id="custom_vegetable" class="form-control mt-2" placeholder="Custom Vegetable" value="{{ pizza.custom_vegetable }}">
+                    </div>
                 </div>
             </div>
 

@@ -105,24 +105,43 @@ def edit_pizza(id):
     return render_template('edit_pizza.html', pizza = pizza)
 
 
-@app.route('/post/edit/pizza/<int:id>', methods=['POST'])
-def post_edit_pizza(id):
+@app.route('/post/edit/pizza/<int:pizza_id>', methods=['POST'])
+def update_pizza(pizza_id):
     if 'user_id' not in session:
         return redirect('/')
-
-    # Check if pizza data validation passes
+    
     if not Pizza.validate_pizza(request.form):
-        flash('Invalid pizza data. Please check your inputs.', 'error')
-        return redirect(f'/edit/pizza/{id}')
+        return redirect(f'/edit/pizza/{pizza_id}')
+    
+    selected_sauce = ', '.join(request.form.getlist('sauce_base'))
+    selected_cheese = ', '.join(request.form.getlist('cheese'))
+    selected_meat = ', '.join(request.form.getlist('meat'))
+    selected_vegetables = ', '.join(request.form.getlist('vegetables'))
+
+    if 'Other' in request.form.getlist('sauce_base'):
+        custom_sauce = request.form.get('custom_sauce')
+        if custom_sauce:
+            selected_sauce += f', {custom_sauce}'
+
+    if 'Other' in request.form.getlist('meat'):
+        custom_meat = request.form.get('custom_meat')
+        if custom_meat:
+            selected_meat += f', {custom_meat}'
+
+    if 'Other' in request.form.getlist('vegetables'):
+        custom_vegetable = request.form.get('custom_vegetable')
+        if custom_vegetable:
+            selected_vegetables += f', {custom_vegetable}'
 
     data = {
-        'id': id,
+        "id": pizza_id,
+        "user_id": session['user_id'],
         "baker": request.form['baker'],
         "dough": request.form['dough'],
-        "sauce_base": ', '.join(request.form.getlist('sauce_base')),
-        "cheese": ', '.join(request.form.getlist('cheese')),
-        "meat": ', '.join(request.form.getlist('meat')),
-        "vegetables": ', '.join(request.form.getlist('vegetables'))
+        "sauce_base": selected_sauce,
+        "cheese": selected_cheese,
+        "meat": selected_meat,
+        "vegetables": selected_vegetables
     }
 
     Pizza.update_pizza(data)
