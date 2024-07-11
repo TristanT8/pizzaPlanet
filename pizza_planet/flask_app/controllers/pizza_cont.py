@@ -147,7 +147,6 @@ def update_pizza(pizza_id):
     Pizza.update_pizza(data)
     return redirect('/dashboard')
 
-
 @app.route('/pizza/delete/<int:id>', methods=['POST', 'DELETE'])
 def delete_pizza(id):
     if 'user_id' not in session:
