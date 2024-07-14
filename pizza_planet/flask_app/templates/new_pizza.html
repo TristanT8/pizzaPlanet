@@ -270,3 +270,275 @@
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        .margin {
+            margin-left: 30px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        .red-text {
+            color: red;
+        }
+        .checkbox-margin {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            // Uncheck all other meats when 'No Meat' is selected
+            $('#No_Meat').change(function() {
+                if(this.checked) {
+                    $('input[name="meat"]').not(this).prop('checked', false);
+                }
+            });
+
+            // Uncheck 'No Meat' if any other meat is selected
+            $('input[name="meat"]').not('#No_Meat').change(function() {
+                if(this.checked) {
+                    $('#No_Meat').prop('checked', false);
+                }
+            });
+
+            // Uncheck all other vegetables when 'No Vegetables' is selected
+            $('#No_Vegetables').change(function() {
+                if(this.checked) {
+                    $('input[name="vegetables"]').not(this).prop('checked', false);
+                }
+            });
+
+            // Uncheck 'No Vegetables' if any other vegetable is selected
+            $('input[name="vegetables"]').not('#No_Vegetables').change(function() {
+                if(this.checked) {
+                    $('#No_Vegetables').prop('checked', false);
+                }
+            });
+
+            // Enable/Disable custom sauce input based on checkbox
+            $('input[name="sauce_base"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_sauce').prop('disabled', false);
+                    } else {
+                        $('#custom_sauce').prop('disabled', true);
+                    }
+                }
+            });
+
+            // Enable/Disable custom meat input based on checkbox
+            $('input[name="meat"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_meat').prop('disabled', false);
+                    } else {
+                        $('#custom_meat').prop('disabled', true);
+                    }
+                }
+            });
+
+            // Enable/Disable custom vegetable input based on checkbox
+            $('input[name="vegetables"]').change(function() {
+                if($(this).val() === 'Other') {
+                    if($(this).is(':checked')) {
+                        $('#custom_vegetable').prop('disabled', false);
+                    } else {
+                        $('#custom_vegetable').prop('disabled', true);
+                    }
+                }
+            });
+        });
+    </script>
+    <title>Create Pizza</title>
+</head>
+<body>
+    <div>
+        <div class="margin">
+            <h1>Create Your Pizza</h1>
+            <a class="btn btn-warning" href="/dashboard">Return Home</a>
+            <!-- Button to open logout confirmation modal -->
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                Logout
+            </button>
+        </div>
+
+        <!-- Logout confirmation modal -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to logout?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <!-- Form to submit logout request -->
+                        <form action="/user/logout" method="POST">
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="margin">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="red-text">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <form action="/validate/pizza" method="POST">
+            <div class="margin">
+                <div class="col-md-5">
+                    <label for="baker">Baker:</label>
+                    <input type="text" name="baker" id="baker" class="form-control">
+                </div>
+                <div class="checkbox-margin">
+                    <label for="dough">Dough:</label><br>
+                    <input type="radio" name="dough" value="Normal_Crust"> Normal<br>
+                    <input type="radio" name="dough" value="Thin_Crust"> Thin Crust<br>
+                    <input type="radio" name="dough" value="Thick_Crust"> Thick Crust<br>
+                    <input type="radio" name="dough" value="Stuffed_Crust"> Stuffed Crust<br>
+                </div>
+                <div class="col-md-6 checkbox-margin">
+                    <label for="sauce" class="form-label">Sauce:</label><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="checkbox" name="sauce_base" value="Red"> Red Sauce
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="sauce_base" value="Spicy_Red"> Spicy Red Sauce
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="sauce_base" value="White"> White Sauce
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="sauce_base" value="Barbecue"> Barbecue Sauce
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="sauce_base" value="Other"> Other:
+                            <input type="text" name="custom_sauce" id="custom_sauce" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 checkbox-margin">
+                    <label for="cheese" class="form-label">Cheese:</label><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="checkbox" name="cheese" value="Normal"> Normal Cheese
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="cheese" value="Extra_Cheese"> Extra Cheese
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="cheese" value="Shaved_Parmesean"> Shaved Parmesan
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="cheese" value="Feta"> Feta Cheese
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 checkbox-margin">
+                    <label for="meat" class="form-label">Meat:</label><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Pepperoni"> Pepperoni
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Sausage"> Sausage
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Bacon"> Bacon
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Ham"> Ham
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Meatballs"> Meatballs
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Anchovies"> Anchovies
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Chicken"> Chicken
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Ground_Beef"> Ground Beef
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Salami"> Salami
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="No_Meat" id="No_Meat"> No Meat
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="meat" value="Other"> Other:
+                            <input type="text" name="custom_meat" id="custom_meat" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 checkbox-margin">
+                    <label for="vegetables" class="form-label">Vegetables:</label><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Mushrooms"> Mushrooms
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Green_Peppers"> Green Peppers
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Onions"> Onions
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Olives"> Olives
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Banana_Peppers"> Banana Peppers
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Jalapenos"> Jalapenos
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Spinach"> Spinach
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Tomoatoes"> Tomatoes
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Pineapple"> Pineapple
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Artichoke"> Artichoke
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="No_Vegetables" id="No_Vegetables"> No Vegetables
+                        </div>
+                        <div class="col-md-3">
+                            <input type="checkbox" name="vegetables" value="Other"> Other:
+                            <input type="text" name="custom_vegetable" id="custom_vegetable" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin">
+                    <button type="submit" class="btn btn-primary">Create Pizza</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
